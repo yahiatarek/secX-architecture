@@ -4,8 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styling.css">
 </head>
 <body>
-    dguu
+    <form action="/uploadFile" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" name="file" class="formControlFile" id="exampleFormControlFile1">
+            <input type="submit" class="rd"  value="read the program">
+            <button class="passOne" type="button">pass one</button>
+            <!-- <button class="ob" type="button">pass two</button>
+            <button class="hte" type="button">Create HTE record</button> -->
+        </div>
+    </form>
+    <table>
+        <thead>
+          <tr>
+            <th>Symbols</th>
+            <th>Instructions</th>
+            <th>reference</th>
+            <th>Pass one</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Row 1, Column 1</td>
+            <td>Row 1, Column 2</td>
+            <td>Row 1, Column 3</td>
+            <td>Row 1, Column 4</td>
+          </tr>
+          <tr>
+            <td>Row 2, Column 1</td>
+            <td>Row 2, Column 2</td>
+            <td>Row 2, Column 3</td>
+            <td>Row 2, Column 4</td>
+          </tr>
+          <tr>
+            <td>Row 3, Column 1</td>
+            <td>Row 3, Column 2</td>
+            <td>Row 3, Column 3</td>
+            <td>Row 3, Column 4</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
 </body>
 </html>
