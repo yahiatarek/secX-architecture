@@ -16,7 +16,8 @@ function getPassOneAddress(data){
     const addressesArray = [];
     for (let i=0; i < linesFromData.length; i++){
         const currentInstruction = linesFromData[i].trim().split(/\s+/).length > 2 ? linesFromData[i].trim().split(/\s+/)[1] : linesFromData[i].trim().split(/\s+/)[0];
-        currAddress = calculateAddress(prevAddress, currentInstruction);
+        const wordWithCurrInstruction = linesFromData[i].trim().split(/\s+/)[linesFromData[i].trim().split(/\s+/).length - 1];
+        currAddress = (i === 0 || i === 1) ? 0 : calculateAddress(prevAddress, currentInstruction, wordWithCurrInstruction);
         prevAddress = currAddress;
         addressesArray.push(currAddress);
     }
@@ -24,9 +25,9 @@ function getPassOneAddress(data){
     return addressesArray;
 }
 
-function calculateAddress(prevAddress, currInst) {
+function calculateAddress(prevAddress, currInst, currWord) {
     const num1 = prevAddress;
-    const num2 = executeInstruction(currInst);
+    const num2 = executeInstruction(currInst, currWord);
 
     const hex1 = num1.toString(16);
     const hex2 = num2.toString(16);

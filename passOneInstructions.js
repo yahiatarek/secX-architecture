@@ -1,18 +1,18 @@
 const instructions = {
-    "RESW": () => {
-        return 0003;
+    "RESW": (word) => {
+        return parseInt(word) * 3;
     },
-    "RESB": () => {
-        return 0003;
+    "RESB": (word) => {
+        return parseInt(word) * 3;
     },
-    "BYTE": () => {
-        return 0003;
+    "BYTE": (word) => {
+        return word.length / 2;
     },
 };
 
-function executeInstruction(word) {
-    if (word in instructions) {
-        return instructions[word]();
+function executeInstruction(inst, word) {
+    if (inst in instructions) {
+        return instructions[inst](word);
     } else {
         return 0003;
     }
