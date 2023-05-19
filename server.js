@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index', {
     linesArray: [],
-    passOneAddress: 0000
+    passOneAddressesArray: []
   });
 });
 
@@ -41,7 +41,7 @@ app.post('/uploadFile', upload.single('file'), (req, res) => {
     try {
       res.render('index', {
         linesArray: getLinesArray(data),
-        passOneAddress: 1
+        passOneAddressesArray: getPassOneAddress(data)
       });
     } catch (err) {
       console.log(err)

@@ -1,3 +1,5 @@
+const { executeInstruction } = require("./passOneInstructions");
+
 function getLinesArray (data) {
     const linesArray = []
     const lines = data.split('\n');
@@ -8,11 +10,29 @@ function getLinesArray (data) {
 }
 
 function getPassOneAddress(data){
-    for (let i=0; i < getLinesArray(data).length; i++){
-        const inst1 = getLinesArray(data)[i].trim().split(/\s+/).length > 2 ? getLinesArray(data)[i].trim().split(/\s+/)[1] : getLinesArray(data)[i].trim().split(/\s+/)[0];
-        const inst2 = getLinesArray(data)[i-1].trim().split(/\s+/).length > 2 ? getLinesArray(data)[i-1].trim().split(/\s+/)[1] : getLinesArray(data)[i-1].trim().split(/\s+/)[0];
-        console.log(inst1,1, inst2, '2')
+    const linesFromData = getLinesArray(data);
+    let prevAddress = linesFromData[0].trim().split(/\s+/)[linesFromData[0].trim().split(/\s+/).length - 1];
+    let currAddress = prevAddress;
+    const addressesArray = [];
+    for (let i=0; i < linesFromData.length; i++){
+        const currentInstruction = linesFromData[i].trim().split(/\s+/).length > 2 ? linesFromData[i].trim().split(/\s+/)[1] : linesFromData[i].trim().split(/\s+/)[0];
+        currAddress = calculateAddress(prevAddress, currentInstruction);
+        prevAddress = currAddress;
+        addressesArray.push(currAddress);
     }
+    console.log(addressesArray, 'array');
+    return addressesArray;
+}
+
+function calculateAddress(prevAddress, currInst) {
+    const num1 = prevAddress;
+    const num2 = executeInstruction(currInst);
+
+    const hex1 = num1.toString(16);
+    const hex2 = num2.toString(16);
+    const sum = parseInt(hex1, 16) + parseInt(hex2, 16);
+    const hexSum = sum.toString(16);
+    return hexSum;
 }
 
 module.exports = { getLinesArray, getPassOneAddress }
