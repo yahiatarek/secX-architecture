@@ -26,26 +26,27 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Row 1, Column 1</td>
-            <td>Row 1, Column 2</td>
-            <td>Row 1, Column 3</td>
-            <td>Row 1, Column 4</td>
-          </tr>
-          <tr>
-            <td>Row 2, Column 1</td>
-            <td>Row 2, Column 2</td>
-            <td>Row 2, Column 3</td>
-            <td>Row 2, Column 4</td>
-          </tr>
-          <tr>
-            <td>Row 3, Column 1</td>
-            <td>Row 3, Column 2</td>
-            <td>Row 3, Column 3</td>
-            <td>Row 3, Column 4</td>
-          </tr>
-          <!-- Add more rows as needed -->
+          <% for (let i=0; i<linesArray.length; i++) { %>
+            <tr>
+              <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[0] : '' %></td>
+              <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[1] : linesArray[i].trim().split(/\s+/)[0] %></td>
+              <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[2] : linesArray[i].trim().split(/\s+/)[1] %></td>
+              <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[3] : linesArray[i].trim().split(/\s+/)[2] %></td>
+              <td><%= passOneAddress %></td>
+            </tr>
+          <% } %>
         </tbody>
+        <tbody>
+          <% for (let i=0; i<3; i++) { %>
+            <tr>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+          <% } %>
+        </tbody>
+          <!-- Add more rows as needed -->
       </table>
 </body>
 </html>

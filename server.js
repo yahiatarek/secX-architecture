@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+const { getLinesArray, getPassOneAddress } = require('./read-file');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,7 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Define a route
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {
+    linesArray: [],
+    passOneAddress: 0000
+  });
 });
 
 app.post('/uploadFile', upload.single('file'), (req, res) => {
@@ -35,7 +39,10 @@ app.post('/uploadFile', upload.single('file'), (req, res) => {
   // Read the contents of the file
   fs.readFile(fileRead, 'utf8', (err, data) => {
     try {
-      res.render('index');
+      res.render('index', {
+        linesArray: getLinesArray(data),
+        passOneAddress: 1
+      });
     } catch (err) {
       console.log(err)
     }
