@@ -4,6 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const { getLinesArray, getPassOneAddress } = require('./read-file');
+const { getObjectCode } = require('./op-codes');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -28,7 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index', {
     linesArray: [],
-    passOneAddressesArray: []
+    passOneAddressesArray: [],
+    objectCodeArray: []
   });
 });
 
@@ -41,7 +43,8 @@ app.post('/uploadFile', upload.single('file'), (req, res) => {
     try {
       res.render('index', {
         linesArray: getLinesArray(data),
-        passOneAddressesArray: []
+        passOneAddressesArray: [],
+        objectCodeArray: []
       });
     } catch (err) {
       console.log(err)
@@ -66,7 +69,36 @@ app.get('/passone', (req, res)=> {
         fs.readFile(filePath, 'utf8', (err, data) => {
           res.render('index', {
             linesArray: getLinesArray(data),
-            passOneAddressesArray: getPassOneAddress(data)
+            passOneAddressesArray: getPassOneAddress(data),
+            objectCodeArray: []
+          });
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+})
+
+app.get('/objectcode', (req, res)=> {
+  fs.readdir('uploads', (err, files) => {
+    try {
+      files = files.map(file => {
+        const filePath = path.join('uploads', file);
+    
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtime.getTime();
+    
+        return { file, mtime };
+      })
+
+      if (files.length > 0) {
+        const filePath = path.join('uploads', files[0].file);
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          res.render('index', {
+            linesArray: getLinesArray(data),
+            passOneAddressesArray: getPassOneAddress(data),
+            objectCodeArray: getObjectCode(data, getPassOneAddress(data))
           });
         })
       }

@@ -12,8 +12,8 @@
             <input type="file" name="file" class="formControlFile" id="exampleFormControlFile1">
             <input type="submit" class="rd"  value="read the program">
             <button onclick="window.location.href = '/passone'" class="passOne" type="button">pass one</button>
-            <!-- <button class="ob" type="button">pass two</button>
-            <button class="hte" type="button">Create HTE record</button> -->
+            <button onclick="window.location.href = '/objectcode'" class="object-code" type="button">object code</button>
+            <!-- <button class="hte" type="button">Create HTE record</button> -->
         </div>
     </form>
     <table>
@@ -23,6 +23,7 @@
             <th>Instructions</th>
             <th>reference</th>
             <th>Pass one</th>
+            <th>Object code</th>
           </tr>
         </thead>
         <tbody>
@@ -33,12 +34,14 @@
               <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[2] : linesArray[i].trim().split(/\s+/)[1] %></td>
               <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[3] : linesArray[i].trim().split(/\s+/)[2] %></td>
               <td><%= passOneAddressesArray[i] %></td>
+              <td><%= objectCodeArray[i] %></td>
             </tr>
           <% } %>
         </tbody>
         <tbody>
           <% for (let i=0; i<3; i++) { %>
             <tr>
+              <td>--</td>
               <td>--</td>
               <td>--</td>
               <td>--</td>
