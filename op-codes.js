@@ -39,7 +39,7 @@ function getObjectCode(data, addresses) {
     const NO_OBJ_CODE = 'no obj code'
     const symbolTableArray = getSymbolTableArray(data, addresses);
 
-    data.split('\n').forEach((line, index)=>{
+    data.split('\n').forEach((line)=>{
         const lineArray = line.trim().split(/\s+/);
         const reference = lineArray[lineArray.length - 1];
         const instruction = lineArray.length > 2 ? lineArray[1] : lineArray[0];
@@ -65,7 +65,6 @@ function getObjectCode(data, addresses) {
             }else {
                 objectCodesArray.push(OP_CODES[instruction] + '8' + address.slice(1));
             }
-
 
         } else if(!regex.test(reference)){
             const address = symbolTableArray.find((line)=> {

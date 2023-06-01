@@ -1,3 +1,4 @@
+const { extendInSpecificBits } = require("./generics");
 const { executeInstruction } = require("./passOneInstructions");
 
 function getLinesArray (data) {
@@ -19,7 +20,7 @@ function getPassOneAddress(data){
         const wordWithCurrInstruction = linesFromData[i].trim().split(/\s+/)[linesFromData[i].trim().split(/\s+/).length - 1];
         currAddress = (i === 0 || i === 1) ? 0 : calculateAddress(prevAddress, currentInstruction, wordWithCurrInstruction);
         prevAddress = currAddress;
-        addressesArray.push(writeAddressIn4Bits(currAddress, 4));
+        addressesArray.push(extendInSpecificBits(currAddress, 4, '0'));
     }
     return addressesArray;
 }
@@ -28,13 +29,6 @@ function calculateAddress(prevAddress, currInst, currWord) {
     const num1 = prevAddress;
     const num2 = executeInstruction(currInst, currWord);
     return hexSum(num1, num2);
-}
-
-function writeAddressIn4Bits(address, length) {
-    while (address.length < length) {
-        address = '0' + address;
-    }
-    return address;
 }
 
 function hexSum(num1, num2) {

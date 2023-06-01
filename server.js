@@ -5,6 +5,7 @@ const multer = require('multer');
 const fs = require('fs');
 const { getLinesArray, getPassOneAddress } = require('./read-file');
 const { getObjectCode } = require('./op-codes');
+const { getHteRecord } = require('./hte-record');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -30,7 +31,8 @@ app.get('/', (req, res) => {
   res.render('index', {
     linesArray: [],
     passOneAddressesArray: [],
-    objectCodeArray: []
+    objectCodeArray: [],
+    hteRecord: []
   });
 });
 
@@ -44,7 +46,8 @@ app.post('/uploadFile', upload.single('file'), (req, res) => {
       res.render('index', {
         linesArray: getLinesArray(data),
         passOneAddressesArray: [],
-        objectCodeArray: []
+        objectCodeArray: [],
+        hteRecord: []
       });
     } catch (err) {
       console.log(err)
@@ -70,7 +73,8 @@ app.get('/passone', (req, res)=> {
           res.render('index', {
             linesArray: getLinesArray(data),
             passOneAddressesArray: getPassOneAddress(data),
-            objectCodeArray: []
+            objectCodeArray: [],
+            hteRecord: []
           });
         })
       }
@@ -98,7 +102,37 @@ app.get('/objectcode', (req, res)=> {
           res.render('index', {
             linesArray: getLinesArray(data),
             passOneAddressesArray: getPassOneAddress(data),
-            objectCodeArray: getObjectCode(data, getPassOneAddress(data))
+            objectCodeArray: getObjectCode(data, getPassOneAddress(data)),
+            hteRecord: []
+          });
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+})
+
+app.get('/hterecord', (req, res)=> {
+  fs.readdir('uploads', (err, files) => {
+    try {
+      files = files.map(file => {
+        const filePath = path.join('uploads', file);
+    
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtime.getTime();
+    
+        return { file, mtime };
+      })
+
+      if (files.length > 0) {
+        const filePath = path.join('uploads', files[0].file);
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          res.render('index', {
+            linesArray: getLinesArray(data),
+            passOneAddressesArray: getPassOneAddress(data),
+            objectCodeArray: getObjectCode(data, getPassOneAddress(data)),
+            hteRecord: getHteRecord(data)
           });
         })
       }

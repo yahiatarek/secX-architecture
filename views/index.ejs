@@ -13,7 +13,7 @@
             <input type="submit" class="rd"  value="read the program">
             <button onclick="window.location.href = '/passone'" class="passOne" type="button">pass one</button>
             <button onclick="window.location.href = '/objectcode'" class="object-code" type="button">object code</button>
-            <!-- <button class="hte" type="button">Create HTE record</button> -->
+            <button onclick="window.location.href = '/hterecord'" class="hte" type="button">Create HTE record</button>
         </div>
     </form>
     <table>
@@ -38,8 +38,7 @@
             </tr>
           <% } %>
         </tbody>
-        <tbody>
-          <% for (let i=0; i<3; i++) { %>
+          <% for (let i=0; i<4; i++) { %>
             <tr>
               <td>--</td>
               <td>--</td>
@@ -48,8 +47,7 @@
               <td>--</td>
             </tr>
           <% } %>
-        </tbody>
-          <!-- Add more rows as needed -->
+          <h1><%=hteRecord%></h1>
       </table>
 </body>
 </html>
