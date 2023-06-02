@@ -34,7 +34,7 @@
               <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[2] : linesArray[i].trim().split(/\s+/)[1] %></td>
               <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[3] : linesArray[i].trim().split(/\s+/)[2] %></td>
               <td><%= passOneAddressesArray[i] %></td>
-              <td><%= objectCodeArray[i] %></td>
+              <td><%= [...objectCodeArray[0], ...objectCodeArray[1]][i] %></td>
             </tr>
           <% } %>
         </tbody>
@@ -47,7 +47,7 @@
               <td>--</td>
             </tr>
           <% } %>
-          <h1><%=hteRecord%></h1>
+          <p><%= hteRecord.filter(record => record !== 'no obj code').join(', ') %></p>
       </table>
 </body>
 </html>

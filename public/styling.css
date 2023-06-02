@@ -1,3 +1,13 @@
 form {
     margin-bottom: 50px;
 }
+
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+p {
+    font-size: larger;
+    font-weight: bold;
+}

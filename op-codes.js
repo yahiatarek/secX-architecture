@@ -82,7 +82,7 @@ function getObjectCode(data, addresses) {
     })
 
     
-    return [...objectCodesArray, ...objectCodesArray1];
+    return [objectCodesArray, objectCodesArray1];
   }
 
   function getSymbolTableArray(data, addresses){

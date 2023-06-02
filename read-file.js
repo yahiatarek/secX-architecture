@@ -10,6 +10,8 @@ function getLinesArray (data) {
     return linesArray;
 }
 
+const breakPointsArray = [];
+
 function getPassOneAddress(data){
     const linesFromData = getLinesArray(data);
     let prevAddress = linesFromData[0].trim().split(/\s+/)[linesFromData[0].trim().split(/\s+/).length - 1];
@@ -21,6 +23,7 @@ function getPassOneAddress(data){
         currAddress = (i === 0 || i === 1) ? 0 : calculateAddress(prevAddress, currentInstruction, wordWithCurrInstruction);
         prevAddress = currAddress;
         addressesArray.push(extendInSpecificBits(currAddress, 4, '0'));
+        if(currentInstruction === 'RESW' && breakPointsArray.length === 0) breakPointsArray.push(currAddress)
     }
     return addressesArray;
 }
@@ -40,4 +43,4 @@ function hexSum(num1, num2) {
     return hexSum;
 }
 
-module.exports = { getLinesArray, getPassOneAddress }
+module.exports = { getLinesArray, getPassOneAddress, breakPointsArray }
