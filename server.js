@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   res.render('index', {
     linesArray: [],
     passOneAddressesArray: [],
-    objectCodeArray: [],
+    objectCodeArray: [[],[]],
     hteRecord: []
   });
 });
@@ -46,7 +46,7 @@ app.post('/uploadFile', upload.single('file'), (req, res) => {
       res.render('index', {
         linesArray: getLinesArray(data),
         passOneAddressesArray: [],
-        objectCodeArray: [],
+        objectCodeArray: [[],[]],
         hteRecord: []
       });
     } catch (err) {
@@ -73,7 +73,7 @@ app.get('/passone', (req, res)=> {
           res.render('index', {
             linesArray: getLinesArray(data),
             passOneAddressesArray: getPassOneAddress(data),
-            objectCodeArray: [],
+            objectCodeArray: [[],[]],
             hteRecord: []
           });
         })
