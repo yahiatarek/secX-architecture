@@ -11,9 +11,10 @@
         <div class="form-group">
             <input type="file" name="file" class="formControlFile" id="exampleFormControlFile1">
             <input type="submit" class="rd"  value="read the program">
-            <button onclick="window.location.href = '/passone'" class="passOne" type="button">pass one</button>
+            <button onclick="window.location.href = '/passone'" class="passone" type="button">pass one</button>
             <button onclick="window.location.href = '/objectcode'" class="object-code" type="button">object code</button>
             <button onclick="window.location.href = '/hterecord'" class="hte" type="button">Create HTE record</button>
+            <button onclick="window.location.href = '/passonesicxe'" class="pass-one-sicxe" type="button">pass one sic xe</button>
         </div>
     </form>
     <table>
@@ -24,6 +25,7 @@
             <th>reference</th>
             <th>Pass one</th>
             <th>Object code</th>
+            <th>Pass one Sicxe</th>
           </tr>
         </thead>
         <tbody>
@@ -35,11 +37,13 @@
               <td><%= linesArray[i].trim().split(/\s+/).length > 2 ? linesArray[i].trim().split(/\s+/)[3] : linesArray[i].trim().split(/\s+/)[2] %></td>
               <td><%= passOneAddressesArray[i] %></td>
               <td><%= [...objectCodeArray[0], ...objectCodeArray[1]][i] %></td>
+              <td><%= passOneAddressesArraySicxe[i] %></td>
             </tr>
           <% } %>
         </tbody>
           <% for (let i=0; i<4; i++) { %>
             <tr>
+              <td>--</td>
               <td>--</td>
               <td>--</td>
               <td>--</td>

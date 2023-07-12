@@ -1,5 +1,6 @@
 const { extendInSpecificBits } = require("./generics");
-const { executeInstruction } = require("./passOneInstructions");
+const { executeInstruction } = require("./pass-one-instructions");
+const { executeInstructionsForSicxe } = require("./pass-one-instructions-sicxe");
 
 function getLinesArray (data) {
     const linesArray = []
@@ -28,9 +29,30 @@ function getPassOneAddress(data){
     return addressesArray;
 }
 
+function getPassOneAddressSicxe(data){
+    const linesFromData = getLinesArray(data);
+    let prevAddress = linesFromData[0].trim().split(/\s+/)[linesFromData[0].trim().split(/\s+/).length - 1];
+    let currAddress = prevAddress;
+    const addressesArray = [];
+    for (let i=0; i < linesFromData.length; i++){
+        const prevInstruction = linesFromData[(i === 0) ? 0 : i-1].trim().split(/\s+/).length > 2 ? linesFromData[(i === 0) ? 0 : i-1].trim().split(/\s+/)[1] : linesFromData[(i === 0) ? 0 : i-1].trim().split(/\s+/)[0];
+        const wordWithCurrInstruction = linesFromData[(i === 0) ? 0 : i-1].trim().split(/\s+/)[linesFromData[(i === 0) ? 0 : i-1].trim().split(/\s+/).length - 1];
+        currAddress = calculateAddressForSicxe(prevAddress, prevInstruction, wordWithCurrInstruction);
+        prevAddress = currAddress;
+        addressesArray.push(extendInSpecificBits(currAddress, 4, '0'));
+    }
+    return addressesArray;
+}
+
 function calculateAddress(prevAddress, currInst, currWord) {
     const num1 = prevAddress;
     const num2 = executeInstruction(currInst, currWord);
+    return hexSum(num1, num2);
+}
+
+function calculateAddressForSicxe(prevAddress, prevInst, currWord) {
+    const num1 = prevAddress;
+    const num2 = executeInstructionsForSicxe(prevInst, currWord);
     return hexSum(num1, num2);
 }
 
@@ -43,4 +65,4 @@ function hexSum(num1, num2) {
     return hexSum;
 }
 
-module.exports = { getLinesArray, getPassOneAddress, breakPointsArray }
+module.exports = { getLinesArray, getPassOneAddress, breakPointsArray, getPassOneAddressSicxe }
