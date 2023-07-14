@@ -7,12 +7,12 @@ const instructions = {
       cycles: 3,
       addr: {
         immediate: "1",
-        direct: "2",
-        indirect: "3",
-        indexed: "B",
-        baseRelative: "4",
-        pcRelative: "9",
-        extended: null
+        indirect: "0",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "0",
+        extended: "0",
+        displacement: "000000000000"
       },
       desc: "Load a value into the index register"
     },
@@ -24,12 +24,12 @@ const instructions = {
       cycles: 3,
       addr: {
         immediate: "1",
-        direct: "2",
-        indirect: "3",
-        indexed: "B",
-        baseRelative: "4",
-        pcRelative: "9",
-        extended: null
+        indirect: "0",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "0",
+        extended: "0",
+        displacement: "000000000000"
       },
       desc: "Load a value into the accumulator"
     },
@@ -40,13 +40,12 @@ const instructions = {
       bytes: 4,
       cycles: 4,
       addr: {
-        immediate: null,
-        direct: "2",
-        indirect: null,
-        indexed: null,
-        baseRelative: null,
-        pcRelative: null,
-        extended: null
+        immediate: "1",
+        indirect: "0",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "0",
+        extended: "1"
       },
       desc: "Load a value into the B register using an extended format instruction"
     },
@@ -58,12 +57,11 @@ const instructions = {
       cycles: 3,
       addr: {
         immediate: "1",
-        direct: "2",
-        indirect: "3",
-        indexed: "B",
-        baseRelative: "4",
-        pcRelative: "9",
-        extended: null
+        indirect: "1",
+        indexed: "1",
+        baseRelative: "0",
+        pcRelative: "1",
+        extended: "0"
       },
       desc: "Add a value to the accumulator"
     },
@@ -75,12 +73,11 @@ const instructions = {
       cycles: 3,
       addr: {
         immediate: "1",
-        direct: "2",
-        indirect: "3",
-        indexed: "B",
-        baseRelative: "4",
-        pcRelative: "9",
-        extended: null
+        indirect: "1",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "1",
+        extended: "0"
       },
       desc: "Increment the index register and compare it to a value"
     },
@@ -91,13 +88,12 @@ const instructions = {
       bytes: 3,
       cycles: 3,
       addr: {
-        immediate: null,
-        direct: "2",
-        indirect: null,
-        indexed: null,
-        baseRelative: "4",
-        pcRelative: "9",
-        extended: null
+        immediate: "1",
+        indirect: "1",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "1",
+        extended: "0"
       },
       desc: "Jump to a memory location if the last comparison was less than"
     },
@@ -108,13 +104,12 @@ const instructions = {
       bytes: 4,
       cycles: 4,
       addr: {
-        immediate: null,
-        direct: "2",
-        indirect: null,
-        indexed: null,
-        baseRelative: null,
-        pcRelative: null,
-        extended: null
+        immediate: "1",
+        indirect: "1",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "0",
+        extended: "1"
       },
       desc: "Store the accumulator value in memory using an extended format instruction"
     },
@@ -125,13 +120,12 @@ const instructions = {
       bytes: 3,
       cycles: 3,
       addr: {
-        immediate: null,
-        direct: null,
-        indirect: null,
-        indexed: null,
-        baseRelative: null,
-        pcRelative: null,
-        extended: null
+        immediate: "1",
+        indirect: "1",
+        indexed: "0",
+        baseRelative: "0",
+        pcRelative: "0",
+        extended: "0"
       },
       desc: "Return from subroutine"
     },
@@ -170,4 +164,4 @@ function executeInstructionsForSicxe(inst, word) {
     return "000" + instructions[inst]?.bytes;
 }
 
-module.exports = {executeInstructionsForSicxe}
+module.exports = {executeInstructionsForSicxe, instructions}

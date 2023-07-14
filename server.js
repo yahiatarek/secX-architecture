@@ -4,8 +4,9 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const { getLinesArray, getPassOneAddress, getPassOneAddressSicxe } = require('./read-file');
-const { getObjectCode } = require('./op-codes');
+const { getObjectCode } = require('./object-codes');
 const { getHteRecord } = require('./hte-record');
+const { getObjectCodeSicXe } = require('./object-codes-sicxe');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -137,7 +138,37 @@ app.get('/objectcode', (req, res)=> {
             passOneAddressesArray: getPassOneAddress(data),
             objectCodeArray: getObjectCode(data, getPassOneAddress(data)),
             hteRecord: [],
-            passOneAddressesArraySicxe: getPassOneAddressSicxe(data)
+            passOneAddressesArraySicxe: getPassOneAddress(data)
+          });
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+})
+
+app.get('/objectcodesicxe', (req, res)=> {
+  fs.readdir('uploads', (err, files) => {
+    try {
+      files = files.map(file => {
+        const filePath = path.join('uploads', file);
+    
+        const stats = fs.statSync(filePath);
+        const mtime = stats.mtime.getTime();
+    
+        return { file, mtime };
+      }).sort((a, b) => b.mtime - a.mtime);
+
+      if (files.length > 0) {
+        const filePath = path.join('uploads', files[0].file);
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          res.render('index', {
+            linesArray: getLinesArray(data),
+            passOneAddressesArray: [],
+            objectCodeArray: getObjectCodeSicXe(data, getPassOneAddressSicxe(data)),
+            hteRecord: [],
+            passOneAddressesArraySicxe: []
           });
         })
       }

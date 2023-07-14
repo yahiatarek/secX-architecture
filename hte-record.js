@@ -1,5 +1,5 @@
 const { extendInSpecificBits, getLinesArray } = require("./generics");
-const { getObjectCode } = require("./op-codes");
+const { getObjectCode } = require("./object-codes");
 const { getPassOneAddress, breakPointsArray } = require("./read-file");
 
 function getHteRecord(data) {
